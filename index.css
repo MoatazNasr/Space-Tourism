@@ -1,0 +1,828 @@
+/* ----------- */
+/* Custom Properties */
+/*------------ */
+
+:root {
+  /* colors */
+  --clr-dark: 230 35% 7%;
+  --clr-light: 231 77% 90%;
+  --clr-white: 0 0% 100%;
+
+  /* font-sizes */
+  --fs-900: clamp(5rem, 8vw + 1rem, 9.375rem);
+  --fs-800: clamp(3.5rem, 5vw + 1rem, 6.25rem);
+  --fs-700: clamp(1.5rem, 3.8vw + 1rem, 3.5rem);
+  --fs-600: clamp(1.25rem, 3vw + 1rem, 2rem);
+  --fs-500: clamp(1rem, 3vw, 1.75rem);
+  --fs-400: clamp(0.9375rem, 1vw + 0.4rem, 1.125rem);
+  --fs-300: 1rem;
+  --fs-200: 0.875rem;
+  /*  font sizes for mobile */
+
+  /* font-families */
+  --ff-serif: "Bellefair", serif;
+  --ff-sans-cond: "Barlow Condensed", sans-serif;
+  --ff-sans-normal: "Barlow", sans-serif;
+}
+/* clamp sets (min , middle,max ) values , but middle value must be a value that can shrink but not less than min or grow but not more than max  */
+/* em not rems or px as safari deals with em as other browsers do in media queries */
+
+/* ----------- */
+/* CSS RESET */
+/*------------ */
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+  font-weight: 400;
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+}
+
+/* Set core root defaults */
+html:focus-within {
+  scroll-behavior: smooth;
+}
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  min-width: 100vw;
+  text-rendering: optimizeSpeed;
+  font-family: var(--ff-sans-normal);
+  font-size: var(--fs-400);
+  background-color: hsl(var(--clr-dark));
+  color: hsl(var(--clr-white));
+  line-height: 1.5;
+  display: grid;
+  overflow-x: hidden;
+  grid-template-rows: max-content 1fr;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+/* Inherit fonts for inputs and buttons as form elements do not inherit font */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+/* ----------- */
+/* Utility Class */
+/*------------ */
+
+.flex {
+  display: flex;
+  gap: 0;
+}
+
+.grid-container--home * {
+  max-width: 50ch;
+  /* each line's width is 50 characters and can not exceed this as it is max  */
+}
+
+.flow > *:where(:not(:first-child)) {
+  margin-top: var(--flow-space, 4rem);
+}
+
+/* (>) direct children, (*) means elements , where not the first one , where can take h1 , h2 , any sort N types of elements   */
+
+.hidden {
+  display: none;
+}
+.sr-only {
+  /* for screen reading only  */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap; /* added line */
+  border: 0;
+}
+
+.bg-dark {
+  background-color: hsl(var(--clr-dark));
+}
+.bg-white {
+  background-color: hsl(var(--clr-white));
+}
+.bg-accent {
+  background-color: hsl(var(--clr-light));
+}
+
+.text-dark {
+  color: hsl(var(--clr-dark));
+}
+.text-white {
+  color: hsl(var(--clr-white));
+}
+.text-accent {
+  color: hsl(var(--clr-light));
+}
+
+.ff-serif {
+  font-family: var(--ff-serif);
+}
+.ff-sans-cond {
+  font-family: var(--ff-sans-cond);
+}
+.ff-sans-normal {
+  font-family: var(--ff-sans-normal);
+}
+
+.letter-spacing-1 {
+  letter-spacing: 4.75px;
+}
+.letter-spacing-2 {
+  letter-spacing: 2.7px;
+}
+.letter-spacing-3 {
+  letter-spacing: 2.35px;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.fs-900 {
+  font-size: var(--fs-900);
+}
+.fs-800 {
+  font-size: var(--fs-800);
+}
+.fs-700 {
+  font-size: var(--fs-700);
+}
+.fs-600 {
+  font-size: var(--fs-600);
+}
+.fs-500 {
+  font-size: var(--fs-500);
+}
+.fs-400 {
+  font-size: var(--fs-400);
+}
+.fs-300 {
+  font-size: var(--fs-300);
+}
+.fs-200 {
+  font-size: var(--fs-200);
+}
+
+.fs-900,
+.fs-800,
+.fs-700,
+.fs-600 {
+  line-height: 1.1;
+}
+
+.numbered-title {
+  font-family: var(--ff-sans-cond);
+  font-size: var(--fs-500);
+  text-transform: uppercase;
+  letter-spacing: 4.72px;
+}
+
+.numbered-title span {
+  margin-left: 0.5em;
+  font-weight: var(--fs-700);
+  color: hsl(var(--clr-white) / 0.25);
+}
+
+.logo {
+  margin-top: 1.5rem;
+}
+
+.primary-navigation {
+  position: absolute;
+  inset: 0 0 0 30%;
+  /* top right bottom left positions*/
+  flex-direction: column;
+  padding-block: 3rem;
+  list-style: none;
+  --gap: 3rem;
+  gap: var(--gap);
+  padding-inline: clamp(2rem, 6vw, 7rem);
+  transform: translateX(-150%);
+  transition: all 0.7s ease-in-out;
+}
+@supports (backdrop-filter: blur(1.5rem)) {
+  .primary-navigation {
+    backdrop-filter: blur(1.5rem);
+  }
+}
+
+/* supports asks if the property exists in the browser or not , if yes do the code , if not skip, solve cross browser compatibility */
+.primary-navigation li > a {
+  text-decoration: none;
+  color: hsl(var(--clr-white));
+}
+.primary-navigation a > span {
+  font-weight: 700;
+  margin-right: 1rem;
+}
+.primary-navigation[data-visiblity="true"] {
+  transform: translateX(0%);
+}
+.underline-indicators > * {
+  border: 0;
+  cursor: pointer;
+  border-right: 0.4rem transparent solid;
+  transition: all ease-in-out 0.7s;
+}
+.underline-indicators > *:hover {
+  border-right-color: hsl(var(--clr-white) / 0.5);
+}
+.underline-indicators > .active,
+.underline-indicators > [aria-selected="true"] {
+  border-right-color: hsl(var(--clr-white));
+}
+.grid-container--home {
+  display: grid;
+  grid-template-rows: auto auto;
+  text-align: center;
+  place-items: center;
+  gap: 0;
+}
+.grid-container--home > *:first-child {
+  grid-row: 1;
+}
+.grid-container--home > *:last-child {
+  grid-row: 2;
+}
+
+/* ----------- */
+/* Components  */
+/*------------ */
+
+.navBTN-toggle {
+  display: block;
+  width: 1.5rem;
+  height: 1.5rem;
+  position: absolute;
+  z-index: 100;
+  right: 1rem;
+  top: 2rem;
+  background: transparent;
+  background-image: url(./assets/shared/icon-hamburger.svg);
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  animation: scale 1s ease-in-out infinite alternate;
+}
+.navBTN-toggle[aria-expanded="true"] {
+  background-image: url(./assets/shared/icon-close.svg);
+}
+@keyframes scale {
+  0% {
+    transform: scale(1.4);
+  }
+
+  50% {
+    transform: scale(1.6);
+  }
+
+  100% {
+    transform: scale(1.4);
+  }
+}
+/* ----------- */
+/* Home Page */
+/*------------ */
+.home {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom center;
+  background-image: url(./assets/home/background-home-mobile.jpg);
+}
+.large-button {
+  display: inline-grid;
+  /* when display an element as grid , it becomes a block element and takes the empty space from a document, so we have to display inline-grid */
+  place-items: center;
+  border-radius: 50%;
+  padding: 0 2em;
+  font-size: 2rem;
+  aspect-ratio: 1;
+  background-color: hsl(var(--clr-white));
+  text-decoration: none;
+  color: hsl(var(--clr-dark));
+  outline: hsl(var(--clr-dark)) 0px solid;
+  transition: outline ease-in-out 0.7s;
+  cursor: pointer;
+}
+/* aspect-ratio makes a square , aspect-ratio: 1 ,square with sides of 1 1 1 1  */
+
+.large-button:hover,
+.large-button:focus {
+  outline: hsl(var(--clr-white) / 0.15) 50px solid;
+}
+
+@media (max-width: 45em) and (min-width: 35em) {
+  .home {
+    background-image: url(./assets/home/background-home-tablet.jpg);
+    background-position: center center;
+  }
+  .primary-header::after {
+    content: "";
+    position: relative;
+    height: 1px;
+    width: 100%;
+    background: hsl(var(--clr-white) / 0.25);
+    top: 2.8rem;
+    order: 1;
+  }
+  .primary-navigation {
+    position: fixed;
+    inset: unset;
+    top: -10px;
+    right: 0px;
+    padding-block: 1rem;
+    z-index: 1;
+    flex-direction: row;
+    list-style: none;
+    --gap: 2rem;
+    gap: var(--gap);
+    transform: translateX(0%);
+  }
+  .primary-navigation a > span {
+    display: none;
+  }
+  .underline-indicators > * {
+    padding-block: var(--underline-gap, 1rem);
+    border: 0;
+    cursor: pointer;
+    border-bottom: 0.2rem transparent solid;
+    transition: all ease-in-out 0.7s;
+  }
+  .underline-indicators > *:hover {
+    border-bottom-color: hsl(var(--clr-white) / 0.5);
+  }
+  .underline-indicators > .active,
+  .underline-indicators > [aria-selected="true"] {
+    border-bottom-color: hsl(var(--clr-white));
+  }
+  .grid-container--home {
+    margin-top: 1rem;
+    display: grid;
+    grid-template-rows: auto auto;
+    text-align: center;
+    place-items: center;
+    gap: 0rem;
+  }
+  .grid-container--home > *:first-child {
+    grid-row: 1;
+  }
+  .grid-container--home > *:last-child {
+    grid-row: 2;
+  }
+  .navBTN-toggle {
+    display: none;
+  }
+}
+@media (min-width: 45em) {
+  .home {
+    background-image: url(./assets/home/background-home-desktop.jpg);
+  }
+  .logo {
+    margin: 0 clamp(1rem, 3vw, 2rem);
+    margin-top: 2.5rem;
+  }
+  .primary-navigation {
+    position: fixed;
+    inset: unset;
+    right: 0px;
+    padding-block: 0.2rem;
+    z-index: 1;
+    flex-direction: row;
+    list-style: none;
+    --gap: 3rem;
+    gap: var(--gap);
+    transform: translateX(0%);
+  }
+  .primary-header::after {
+    content: "";
+    position: relative;
+    height: 1px;
+    width: 100%;
+    background: hsl(var(--clr-white) / 0.25);
+    top: 4rem;
+    order: 1;
+  }
+  .underline-indicators > * {
+    --underline-gap: 2rem;
+    padding-block: var(--underline-gap, 1rem);
+    border: 0;
+    cursor: pointer;
+    border-bottom: 0.2rem transparent solid;
+    transition: all ease-in-out 0.7s;
+  }
+  .underline-indicators > *:hover {
+    border-bottom-color: hsl(var(--clr-white) / 0.5);
+  }
+  .underline-indicators > .active,
+  .underline-indicators > [aria-selected="true"] {
+    border-bottom-color: hsl(var(--clr-white));
+  }
+  .grid-container--home {
+    display: grid;
+    text-align: left;
+    justify-content: center;
+    --gap: 2rem;
+    grid-template-columns: minmax(1rem, 1fr) repeat(2, minmax(0, 40rem)) minmax(
+        1rem,
+        1fr
+      );
+    grid-template-rows: none;
+    gap: var(--gap);
+  }
+  .grid-container--home > *:first-child {
+    grid-column: 2;
+    grid-row: 1;
+
+    /* starts at column 2 and takes only 1 column  */
+  }
+  .grid-container--home > *:last-child {
+    grid-column: 3;
+    grid-row: 1;
+  }
+  .navBTN-toggle {
+    display: none;
+  }
+}
+/* ----------- */
+/* Destination Page*/
+/*------------ */
+
+.destination {
+  background-image: url(./assets/destination/background-destination-desktop.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.grid-container--destination {
+  grid-template-areas: "title", "img", "tabs", "dest-info";
+  grid-template-columns: none;
+  text-align: center;
+  --gap: 2rem;
+  row-gap: var(--gap);
+}
+.grid-container--destination h1 {
+  grid-area: title;
+  padding-bottom: 3rem;
+  margin-top: 2.5rem;
+}
+.grid-container--destination img {
+  grid-area: img;
+  max-width: 100%;
+  margin-inline: auto;
+}
+.grid-container--destination .tab-list {
+  grid-area: tabs;
+}
+.tab-list {
+  height: max-content;
+}
+.tab-list ul {
+  list-style: none;
+}
+.tab-list button {
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.grid-container--destination .underline-indicators > * {
+  border-right: none;
+  border-bottom: 0.2rem transparent solid;
+  --underline-gap: 1rem;
+  padding-block: var(--underline-gap, 1rem);
+}
+
+.grid-container--destination article {
+  grid-area: dest-info;
+}
+.grid-container--destination article > p:nth-child(2) {
+  padding-bottom: 2rem;
+  border-bottom: 1px hsl(var(--clr-white) / 0.25) solid;
+}
+.grid-container--destination article .time-distance {
+  margin-top: 0.5rem;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.grid-container--destination .underline-indicators > *:hover {
+  border-bottom-color: hsl(var(--clr-white) / 0.5);
+}
+.grid-container--destination .underline-indicators > .active,
+.grid-container--destination .underline-indicators > [aria-selected="true"] {
+  border-bottom-color: hsl(var(--clr-white));
+  color: white;
+}
+
+@media (max-width: 45em) and (min-width: 35em) {
+  .grid-container--destination article .time-distance {
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+
+  .grid-container--destination h1 {
+    text-align: left;
+  }
+}
+@media (min-width: 45em) {
+  .grid-container--destination {
+    display: grid;
+    text-align: left;
+    place-items: center;
+    grid-template-columns: minmax(1rem, 1fr) repeat(2, minmax(0, 40rem)) minmax(
+        1rem,
+        1fr
+      );
+    gap: 0.5rem;
+  }
+  .grid-container--destination h1 {
+    grid-column: 2;
+    grid-row: 1;
+    margin-right: auto;
+  }
+  .grid-container--destination picture {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  .grid-container--destination .tab-list {
+    grid-column: 3;
+    grid-row: 2;
+    margin-right: auto;
+    align-self: flex-start;
+  }
+  .grid-container--destination article {
+    margin-top: 2rem;
+    grid-column: 3;
+    grid-row: 2;
+    align-self: center;
+  }
+  .grid-container--destination article .time-distance {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+/* ----------- */
+/* Crew Page*/
+/*------------ */
+
+.dot-indicators > * {
+  cursor: pointer;
+  border: 0;
+  border-radius: 50%;
+  padding: 0.5rem;
+  margin-right: 0.5rem;
+  background-color: hsl(var(--clr-white) / 0.25);
+  transition: all ease-in-out 0.7s;
+}
+.dot-indicators > *:hover {
+  background-color: hsl(var(--clr-white) / 0.5);
+}
+.dot-indicators > [aria-selected="true"] {
+  background-color: hsl(var(--clr-white) / 1);
+}
+
+.crew {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url(./assets/crew/background-crew-mobile.jpg);
+}
+.grid-container--crew {
+  text-align: center;
+  margin-top: 2rem;
+  display: grid;
+  place-items: center;
+  gap: var(--underline-gap, 1rem);
+}
+.grid-container--crew picture {
+  border-bottom: 1px hsl(var(--clr-white) / 0.25) solid;
+  max-width: 100%;
+}
+.grid-container--crew article h2 {
+  color: hsl(var(--clr-white) / 0.25);
+}
+.grid-container--crew article p:nth-of-type(2) {
+  margin-block: 1.5rem;
+}
+
+@media (max-width: 45em) and (min-width: 35em) {
+  .crew {
+    background-image: url(./assets/crew/background-crew-tablet.jpg);
+  }
+  .grid-container--crew h1 {
+    order: 1;
+    margin-right: auto;
+  }
+  .grid-container--crew div {
+    order: 3;
+  }
+  .grid-container--crew article {
+    order: 2;
+  }
+  .grid-container--crew picture {
+    order: 4;
+    border: none;
+  }
+}
+
+@media (min-width: 45em) {
+  .crew {
+    background-image: url(./assets/crew/background-crew-desktop.jpg);
+  }
+  .grid-container--crew {
+    display: grid;
+    text-align: left;
+    place-items: center;
+    --gap: 2rem;
+    grid-template-columns: minmax(1rem, 1fr) repeat(2, minmax(0, 40rem)) minmax(
+        1rem,
+        1fr
+      );
+    column-gap: var(--gap);
+    row-gap: 0rem;
+  }
+  .grid-container--crew h1 {
+    grid-column: 2;
+    grid-row: 1;
+    margin-right: auto;
+  }
+  .grid-container--crew picture {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+    align-self: flex-end;
+    border: none;
+  }
+  .grid-container--crew article {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: flex-start;
+  }
+  .grid-container--crew div {
+    grid-column: 2;
+    grid-row: 2;
+    margin-right: auto;
+    align-self: flex-end;
+    margin-bottom: clamp(6rem, 8vw, 8rem);
+  }
+}
+
+/* ----------- */
+/* Technology Page*/
+/*------------ */
+
+.technology {
+  background-image: url(./assets/technology/background-technology-mobile.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.grid-container--technology .circle-indicators > * {
+  cursor: pointer;
+  border: 0;
+  color: hsl(var(--clr-white));
+  background: hsl(var(--clr-dark));
+  border: 2px solid gray;
+  padding: 1rem 1.3rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  margin-block: 1rem;
+  margin-right: 0.5rem;
+  transition: all ease-in-out 0.7s;
+}
+
+.grid-container--technology .circle-indicators > *:hover {
+  background-color: hsl(var(--clr-white) / 0.8);
+}
+
+.grid-container--technology .circle-indicators > [aria-selected="true"] {
+  color: hsl(var(--clr-dark));
+  background-color: hsl(var(--clr-white));
+}
+
+.grid-container--technology {
+  grid-template-areas: "title", "img", "tabs", "tech-info";
+  grid-template-columns: none;
+  text-align: center;
+  --gap: 6rem;
+  row-gap: var(--gap);
+}
+.grid-container--technology h1 {
+  grid-area: title;
+  padding-bottom: 3rem;
+  margin-top: 2.5rem;
+}
+.grid-container--technology img {
+  grid-area: img;
+  max-width: 100%;
+  margin-inline: auto;
+}
+.grid-container--technology .tab-list {
+  grid-area: tabs;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.grid-container--technology article {
+  grid-area: tech-info;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 45em) and (min-width: 35em) {
+  .technology {
+    background-image: url(./assets/technology/background-technology-tablet.jpg);
+  }
+  .grid-container--technology h1 {
+    text-align: left;
+  }
+}
+@media (min-width: 45em) {
+  .technology {
+    background-image: url(./assets/technology/background-technology-desktop.jpg);
+  }
+  .grid-container--technology {
+    display: grid;
+    text-align: left;
+    place-items: center;
+    grid-template-columns: minmax(1rem, 1fr) minmax(0, 5rem) minmax(0, 47rem) minmax(
+        0,
+        32rem
+      );
+    gap: 0.5rem;
+  }
+  .grid-container--technology h1 {
+    grid-row: 1;
+    grid-column: 2 / span 2;
+    margin-right: auto;
+  }
+  .grid-container--technology picture {
+    grid-column: 4;
+    grid-row: 2;
+    margin-left: auto;
+    align-self: flex-start;
+  }
+  .grid-container--technology .tab-list {
+    grid-column: 2;
+    grid-row: 2;
+    display: flex;
+    flex-direction: column;
+  }
+  .grid-container--technology article {
+    margin-top: 2rem;
+    grid-column: 3;
+    grid-row: 2;
+  }
+}
